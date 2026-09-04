@@ -1,0 +1,581 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-navy: #0A0F1E;
+    --color-navy-light: #FFFFFF;
+    --color-card: #141B2E;
+    --color-card-light: #F1F5F9;
+    --color-line: #232B42;
+    --color-line-soft: #E2E8F0;
+    --color-primary: #3B82F6;
+    --color-primary-dark: #2563EB;
+
+    --font-display: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body {
+    font-family: var(--font-sans);
+}
+
+.font-display {
+    font-family: var(--font-display);
+}
+
+/* Gradient text */
+.text-gradient {
+    background: linear-gradient(90deg, #60A5FA, #3B82F6, #818CF8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-entrance {
+    animation: hero-entrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.94);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.22s;
+}
+
+.delay-300 {
+    animation-delay: 0.34s;
+}
+
+.delay-400 {
+    animation-delay: 0.46s;
+}
+
+.delay-500 {
+    animation-delay: 0.58s;
+}
+
+.delay-600 {
+    animation-delay: 0.7s;
+}
+
+/* Ring berdenyut halus di sekitar foto profil */
+.ring-pulse {
+    animation: ring-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35);
+    }
+
+    50% {
+        box-shadow: 0 0 0 14px rgba(59, 130, 246, 0);
+    }
+}
+
+/* Tombol utama berdenyut halus */
+.pulse-shadow {
+    animation: pulse-shadow 2.8s ease-in-out infinite;
+}
+
+@keyframes pulse-shadow {
+
+    0%,
+    100% {
+        box-shadow: 0 10px 30px -8px rgba(59, 130, 246, 0.45);
+    }
+
+    50% {
+        box-shadow: 0 10px 40px -4px rgba(59, 130, 246, 0.7);
+    }
+}
+
+/* Gradient button */
+.btn-gradient {
+    background: linear-gradient(90deg, #3B82F6, #6366F1);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.btn-gradient:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+}
+
+.bar-gradient {
+    /* Underline accent bar - RGB berganti warna smooth */
+
+    background: linear-gradient(90deg,
+            #00ffff,
+            #8b5cf6,
+            #ec4899,
+            #3b82f6,
+            #00ffff);
+    background-size: 300% auto;
+    animation: bar-rgb-shift 4s linear infinite;
+}
+
+@keyframes bar-rgb-shift {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 300% center;
+    }
+}
+
+
+/* Magnetic button */
+.magnetic {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    display: inline-block;
+}
+
+.magnetic-inner {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Zoom foto profil saat hover (desktop) / disentuh (mobile) */
+.photo-zoom {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.orbit-ring {
+    border-radius: 9999px;
+    background: conic-gradient(from 0deg, transparent 0%, var(--color-primary) 6%, transparent 14%, transparent 50%, #ff0000 56%, transparent 64%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #e70909 calc(100% - 11px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000000 calc(100% - 11px));
+    animation: orbit-spin 7s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes orbit-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Efek kilau menyapu foto saat di-hover */
+.photo-frame {
+    position: relative;
+}
+
+.shine-sweep {
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    transition: left 0.75s ease;
+}
+
+.photo-frame:hover .shine-sweep {
+    left: 125%;
+}
+
+.photo-zoom:hover {
+    transform: scale(1.08);
+}
+
+
+.photo-zoom:active {
+    transform: scale(1.03);
+}
+
+/* Ambient blobs for hero background */
+.blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+/* Gelembung mengambang */
+.bubble {
+    position: absolute;
+    bottom: -10%;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.55), rgba(59, 130, 246, 0.12) 70%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    pointer-events: auto;
+    cursor: pointer;
+    animation: bubble-rise linear infinite;
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bubble.bubble-pop {
+    animation: none !important;
+    opacity: 0;
+    transform: scale(1.7);
+}
+
+@keyframes bubble-rise {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.7;
+    }
+
+    90% {
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translate(var(--bubble-drift, 20px), -115vh);
+        opacity: 0;
+    }
+}
+
+/* Cipratan air saat gelembung pecah */
+.water-drop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(59, 130, 246, 0.55) 70%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+    z-index: 60;
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s ease;
+}
+
+.water-drop.drop-burst {
+    transform: translate(var(--drop-x, 0px), var(--drop-y, 0px)) scale(0.15);
+    opacity: 0;
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Typewriter caret */
+.caret {
+    display: inline-block;
+    width: 3px;
+    margin-left: 3px;
+    background: currentColor;
+    animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Navbar sliding indicator: bingkai berbentuk awan mengikuti menu aktif */
+#nav-indicator {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+            color-mix(in srgb, var(--color-primary) 18%, transparent),
+            color-mix(in srgb, #818CF8 24%, transparent),
+            color-mix(in srgb, var(--color-primary) 18%, transparent));
+    border: 1px solid color-mix(in srgb, var(--color-primary) 50%, transparent);
+    box-shadow: 0 6px 16px -6px rgba(59, 130, 246, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Dua "gumpalan awan" simetris kiri-kanan yang mengapung pelan di atas bingkai */
+#nav-indicator::before,
+#nav-indicator::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    width: 40%;
+    height: 60%;
+    border-radius: 50%;
+    background: inherit;
+    border: inherit;
+    animation: cloud-bob 3.2s ease-in-out infinite;
+}
+
+#nav-indicator::before {
+    left: 6%;
+    animation-delay: 0s;
+}
+
+#nav-indicator::after {
+    right: 6%;
+    animation-delay: 0.6s;
+}
+
+@keyframes cloud-bob {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+.nav-link {
+    position: relative;
+    z-index: 1;
+}
+
+/* Skill bar / icon float */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Bounce chevron */
+@keyframes bounce-soft {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: .6;
+    }
+
+    50% {
+        transform: translateY(6px);
+        opacity: 1;
+    }
+}
+
+.bounce-soft {
+    animation: bounce-soft 2s ease-in-out infinite;
+}
+
+/* Angka counter: lebar digit stabil biar tidak "goyang" saat animasi menghitung */
+.counter {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ===== Project card 3D tilt ===== */
+.tilt-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    will-change: transform;
+}
+
+.tilt-card.tilt-active {
+    transition: transform 0.1s ease-out, border-color 0.3s ease;
+}
+
+.tilt-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.35), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.tilt-card:hover .tilt-glare {
+    opacity: 1;
+}
+
+/* Perangkat sentuh: matikan tilt, biarkan tampilan datar normal */
+@media (hover: none),
+(pointer: coarse) {
+    .tilt-card {
+        transform: none !important;
+    }
+
+    .tilt-glare {
+        display: none !important;
+    }
+}
+
+
+/* ===== Page transition: garis tirai tipis menyapu layar saat pindah section ===== */
+#page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-primary), #818CF8);
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+#page-transition-overlay.active {
+    opacity: 1;
+    width: 100%;
+}
+
+@keyframes curtain-sweep {
+    0% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh);
+        opacity: 1;
+    }
+}
+
+.rgb-text {
+    background: linear-gradient(90deg,
+            #00ffff 0%,
+            #8b5cf6 50%,
+            #00ffff 100%) !important;
+
+    background-size: 200% auto !important;
+
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+
+    animation: modernHallo 2s linear infinite !important;
+}
+
+@keyframes modernHallo {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* ===== Cursor trail: kursor mouse tetap normal, ada bayangan "uler" mengikuti ===== */
+.cursor-trail-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 9999;
+    background: var(--color-primary);
+    will-change: transform;
+    transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.cursor-trail-dot.trail-hover {
+    background: #818CF8;
+}
+
+/* Sembunyikan di perangkat sentuh, biarkan perilaku native */
+@media (hover: none),
+(pointer: coarse) {
+    .cursor-trail-dot {
+        display: none !important;
+    }
+}
+
+/* Kartu info kecil (Name/Email/From/Phone) di section About */
+.info-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-line-soft);
+    background: color-mix(in srgb, var(--color-primary) 3%, transparent);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease;
+}
+
+.dark .info-card {
+    border-color: var(--color-line);
+    background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-primary);
+}
+
+.info-card-icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+    color: var(--color-primary);
+}
