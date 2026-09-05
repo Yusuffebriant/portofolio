@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
+    // Folder tujuan upload, relatif terhadap public/
+    private string $uploadDir = 'images/projects';
+
     public function index()
     {
         return view('admin.projects.index', [
@@ -29,7 +31,7 @@ class ProjectController extends Controller
         $data['slug'] = Str::slug($request->title) . '-' . Str::random(4);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('projects', 'public');
+            $data['image'] = $this->storeImage($request->file('image'));
         }
 
         Project::create($data);
@@ -50,10 +52,8 @@ class ProjectController extends Controller
         $data = $this->validated($request);
 
         if ($request->hasFile('image')) {
-            if ($project->image) {
-                Storage::disk('public')->delete($project->image);
-            }
-            $data['image'] = $request->file('image')->store('projects', 'public');
+            $this->deleteImage($project->image);
+            $data['image'] = $this->storeImage($request->file('image'));
         }
 
         $project->update($data);
@@ -63,9 +63,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->image) {
-            Storage::disk('public')->delete($project->image);
-        }
+        $this->deleteImage($project->image);
 
         $project->delete();
 
@@ -92,5 +90,39 @@ class ProjectController extends Controller
             'status' => ['required', 'in:draft,published'],
             'order' => ['nullable', 'integer'],
         ]);
+    }
+
+    /**
+     * Simpan file gambar langsung ke public/images/projects, tanpa lewat
+     * symlink storage. Mengembalikan path relatif (disimpan ke kolom
+     * `image` di database), misalnya: images/projects/1710000000_foto.png
+     */
+    private function storeImage($file): string
+    {
+        $filename = time() . '_' . Str::random(6) . '.' . $file->getClientOriginalExtension();
+        $destination = public_path($this->uploadDir);
+
+        if (!is_dir($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        $file->move($destination, $filename);
+
+        return $this->uploadDir . '/' . $filename;
+    }
+
+    /**
+     * Hapus file gambar lama dari public/images/projects, kalau ada.
+     */
+    private function deleteImage(?string $path): void
+    {
+        if (!$path) {
+            return;
+        }
+
+        $fullPath = public_path($path);
+        if (is_file($fullPath)) {
+            unlink($fullPath);
+        }
     }
 }

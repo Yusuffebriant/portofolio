@@ -2,6 +2,7 @@
 
     {{-- ===== HERO ===== --}}
     <section id="home" class="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pt-20">
+        <div id="light-rays-canvas" class="absolute inset-0 pointer-events-none z-0"></div>
         <div class="blob w-96 h-96 bg-primary -top-20 -left-20"></div>
         <div class="blob w-96 h-96 bg-indigo-500 top-40 right-0"></div>
         <div class="blob w-72 h-72 bg-blue-400 bottom-0 left-1/3"></div>
@@ -38,15 +39,15 @@
             </p>
 
             <div class="hero-entrance delay-400 flex items-center gap-4 mb-10">
-                <a href="https://github.com/USERNAME" target="_blank"
+                <a href="https://github.com/Yusuffebriant" target="_blank"
                    class="w-11 h-11 rounded-full bg-white dark:bg-card border border-line-soft dark:border-line flex items-center justify-center text-slate-500 dark:text-slate-300 hover:border-primary hover:text-primary hover:-translate-y-1 transition duration-300">
                     <x-social-icon platform="github" class="h-[18px] w-[18px]" />
                 </a>
-                <a href="https://linkedin.com/in/USERNAME" target="_blank"
+                <a href="https://linkedin.com/in/Yusuffebriant" target="_blank"
                    class="w-11 h-11 rounded-full bg-white dark:bg-card border border-line-soft dark:border-line flex items-center justify-center text-slate-500 dark:text-slate-300 hover:border-primary hover:text-primary hover:-translate-y-1 transition duration-300">
                     <x-social-icon platform="linkedin" class="h-[18px] w-[18px]" />
                 </a>
-                <a href="https://instagram.com/USERNAME" target="_blank"
+                <a href="https://instagram.com/yusuffebrianttt/" target="_blank"
                    class="w-11 h-11 rounded-full bg-white dark:bg-card border border-line-soft dark:border-line flex items-center justify-center text-slate-500 dark:text-slate-300 hover:border-primary hover:text-primary hover:-translate-y-1 transition duration-300">
                     <x-social-icon platform="instagram" class="h-[18px] w-[18px]" />
                 </a>
@@ -258,7 +259,7 @@
                     <span class="w-3 h-3 rounded-full bg-primary shadow shadow-primary/50"></span>
                 </div>
                 <div class="pb-2">
-                    <h3 class="font-display font-semibold">Universitas ...</h3>
+                    <h3 class="font-display font-semibold">Universitas Duta Bangsa Surakarta</h3>
                     <p class="text-xs text-primary font-medium mb-2">Program Studi Informatika · 2022 – 2026</p>
                     <p class="text-sm text-slate-500 dark:text-slate-400">
                         Fokus mempelajari pengembangan perangkat lunak, basis data, dan rekayasa web.
@@ -343,13 +344,13 @@
 
                 <p class="text-xs uppercase tracking-wide text-slate-400 mb-3">Stay Connected</p>
                 <div class="flex items-center gap-3">
-                    <a href="https://github.com/USERNAME" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
+                    <a href="https://github.com/Yusuffebriant" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="github" class="h-4 w-4" />
                     </a>
-                    <a href="https://linkedin.com/in/USERNAME" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
+                    <a href="https://linkedin.com/in/Yusuffebriant" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="linkedin" class="h-4 w-4" />
                     </a>
-                    <a href="https://instagram.com/USERNAME" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
+                    <a href="https://instagram.com/yusuffebrianttt/" target="_blank" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="instagram" class="h-4 w-4" />
                     </a>
                 </div>

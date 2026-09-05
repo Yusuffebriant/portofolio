@@ -82,15 +82,15 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">Turning ideas into digital realities.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="https://github.com/USERNAME" target="_blank"
+                    <a href="https://github.com/Yusuffebriant" target="_blank"
                        class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="github" class="h-4 w-4" />
                     </a>
-                    <a href="https://linkedin.com/in/USERNAME" target="_blank"
+                    <a href="https://linkedin.com/in/Yusuffebriant" target="_blank"
                        class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="linkedin" class="h-4 w-4" />
                     </a>
-                    <a href="https://instagram.com/USERNAME" target="_blank"
+                    <a href="https://instagram.com/yusuffebrianttt/" target="_blank"
                        class="w-10 h-10 rounded-full bg-slate-100 dark:bg-card flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-primary hover:text-white transition">
                         <x-social-icon platform="instagram" class="h-4 w-4" />
                     </a>

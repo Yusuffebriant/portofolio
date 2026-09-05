@@ -1,4 +1,5 @@
 import Alpine from 'alpinejs';
+import { initLightRays } from './lightRays';
 
 window.Alpine = Alpine;
 Alpine.start();
@@ -16,6 +17,15 @@ window.toggleTheme = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== Light rays background (hero section) =====
+    initLightRays('#light-rays-canvas', {
+        color: [0.35, 0.65, 1.0], // biru muda, samakan dengan --color-primary kalau perlu
+        speed: 1.0,
+        spread: 0.7,
+        rayLength: 1.3,
+        followMouse: true,
+    });
+
     // ===== Staggered scroll reveal =====
     const groups = document.querySelectorAll('[data-reveal-group]');
     groups.forEach((group) => {
@@ -276,7 +286,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const headerOffset = 80; // tinggi navbar fixed
             const targetY = target.getBoundingClientRect().top + window.scrollY - headerOffset;
 
+            // ===== FIX: matikan native "scroll-behavior: smooth" (dari CSS)
+            // sementara animasi JS berjalan. Kalau dibiarkan aktif, setiap
+            // window.scrollTo() yang dipanggil berkali-kali per detik oleh
+            // rAF loop di smoothScrollTo akan di-smooth-kan ulang oleh
+            // browser, sehingga dua animasi saling menimpa dan hasilnya
+            // terlihat melompat instan / tersendat, bukan smooth 650ms
+            // seperti niatnya.
+            const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+
             smoothScrollTo(targetY, SCROLL_DURATION, () => {
+                document.documentElement.style.scrollBehavior = previousScrollBehavior;
                 transitionOverlay.classList.remove('active');
                 setTimeout(() => {
                     transitionOverlay.style.width = '0%';
@@ -470,13 +491,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const animateTrail = () => {
+        // ===== FIX: animasi trail dibuat time-based (bukan lagi per-frame) =====
+        // Sebelumnya: pos.x += (targetX - pos.x) * ease  -> makin tinggi refresh rate
+        // monitor, makin sering fungsi ini dipanggil per detik, sehingga titik trail
+        // "menyusul" posisi mouse jauh lebih cepat di layar 120Hz/144Hz dibanding 60Hz.
+        // Sekarang: kecepatan penyusulan dihitung berdasarkan delta waktu asli
+        // (performance.now()), sehingga hasilnya konsisten di semua refresh rate.
+        let lastTrailTime = performance.now();
+
+        const animateTrail = (now) => {
+            // dt dinormalisasi ke basis 60fps (1 unit = 1/60 detik), dibatasi
+            // maksimum 3x supaya tidak ada lompatan aneh saat tab sempat freeze.
+            const dt = Math.min((now - lastTrailTime) / (1000 / 60), 3);
+            lastTrailTime = now;
+
             let targetX = mouseX;
             let targetY = mouseY;
             trailPos.forEach((pos, i) => {
-                const ease = Math.max(0.15, 0.4 - i * 0.02); // segmen belakang bergerak lebih lambat -> efek uler
-                pos.x += (targetX - pos.x) * ease;
-                pos.y += (targetY - pos.y) * ease;
+                const ease = Math.max(0.15, 0.4 - i * 0.02);
+                // exponential smoothing yang benar secara matematis terhadap waktu
+                const factor = 1 - Math.pow(1 - ease, dt);
+                pos.x += (targetX - pos.x) * factor;
+                pos.y += (targetY - pos.y) * factor;
                 trailDots[i].style.left = `${pos.x}px`;
                 trailDots[i].style.top = `${pos.y}px`;
                 targetX = pos.x;
@@ -484,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             requestAnimationFrame(animateTrail);
         };
-        animateTrail();
+        requestAnimationFrame(animateTrail);
 
         // Start invisible until the mouse actually moves, so it doesn't flash at (0,0)
         trailDots.forEach((seg) => {
@@ -513,6 +549,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-
-
